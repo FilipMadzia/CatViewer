@@ -1,0 +1,15 @@
+﻿@using CatViewer.Models.CatViewModels
+@model APICatVm
+
+@{
+	ViewData["Title"] = "Browse cats";
+}
+
+<div class="row">
+	@foreach(var cat in Model.Cats)
+	{
+		<div class="col-lg-3 col-md-3 col-sm-12">
+			<img class="img-fluid" src="@cat.Url" />
+		</div>
+	}
+</div>
