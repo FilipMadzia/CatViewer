@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CatViewer.Data
-{
-    public class ApplicationDbContext : IdentityDbContext
-    {
-        public DbSet<CatEntity> CatEntities { get; set; }
+namespace CatViewer.Data;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+public class ApplicationDbContext : IdentityDbContext
+{
+    public DbSet<CatEntity> CatEntities { get; set; }
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
     }
 }
