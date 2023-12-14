@@ -1,15 +1,53 @@
-﻿@using CatViewer.Models.CatViewModels
-@model APICatVm
+﻿@using CatViewer.Models.BrowseCats
+@model BrowseCatsIndexVm
 
 @{
 	ViewData["Title"] = "Browse cats";
 }
 
+<h1>Hello @User.Identity?.Name!</h1>
+
 <div class="row">
-	@foreach(var cat in Model.Cats)
+	@foreach(var cat in Model.Cats!)
 	{
-		<div class="col-lg-3 col-md-3 col-sm-12">
-			<img class="img-fluid" src="@cat.Url" />
+		<div class="col-lg-3 col-md-3 col-sm-12" data-bs-toggle="modal" data-bs-target="#image-info-modal" data-bs-image-src="@cat.Url" role="button">
+			<img class="img-thumbnail" src="@cat.Url" loading="lazy" />
 		</div>
 	}
 </div>
+
+<!-- Image Info Modal -->
+<div class="modal fade" id="image-info-modal" tabindex="-1" aria-labelledby="image-info-modal" aria-hidden="true">
+	<div class="modal-dialog modal-fullscreen">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">View cat</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<img class="img-modal" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="modal-close-button" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	const modal = document.getElementById("image-info-modal");
+	const modalCloseButton = document.getElementById("modal-close-button");
+
+	modal.addEventListener("shown.bs.modal", (e) => {
+		modalCloseButton.focus();
+
+		var image = e.relatedTarget;
+		var imageSrc = image.getAttribute("data-bs-image-src");
+
+		modal.querySelector(".modal-body img").src = imageSrc;
+	});
+
+	modal.addEventListener("hidden.bs.modal", (e) => {
+		modal.querySelector(".modal-body img").src = "";
+	});
+</script>
